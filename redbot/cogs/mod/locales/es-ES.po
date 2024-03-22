@@ -61,8 +61,8 @@ msgid "Invalid days. Must be between 0 and 7."
 msgstr "Días no válidos. Debe estar entre 0 y 7."
 
 #: redbot/cogs/mod/kickban.py:130 redbot/cogs/mod/kickban.py:625
-msgid "I cannot let you do that. Self-harm is bad {}"
-msgstr "No puedo dejarte hacer eso. Hacerse daño uno mismo esta mal {}"
+msgid "You cannot ban yourself."
+msgstr "No puedes prohibirte."
 
 #: redbot/cogs/mod/kickban.py:135 redbot/cogs/mod/kickban.py:322
 #: redbot/cogs/mod/kickban.py:630 redbot/cogs/mod/kickban.py:715
@@ -95,9 +95,13 @@ msgstr "El usuario con ID {user_id} ya está baneado."
 msgid "User with ID {user_id} was upgraded from a temporary to a permanent ban."
 msgstr "El usuario con ID {user_id} fue actualizado de un baneo temporal a permanente."
 
-#: redbot/cogs/mod/kickban.py:201 redbot/cogs/mod/kickban.py:371
-msgid "Done. That felt good."
+#: redbot/cogs/mod/kickban.py:281
+msgid "User with ID {user_id} has been banned."
 msgstr "Hecho. Eso se sintió bien."
+
+#: redbot/cogs/mod/kickban.py:371
+msgid "User with ID {user_id} has been kicked."
+msgstr ""
 
 #: redbot/cogs/mod/kickban.py:203 redbot/cogs/mod/kickban.py:350
 msgid "I'm not allowed to do that."
@@ -134,8 +138,8 @@ msgid "You must provide a reason for the kick."
 msgstr ""
 
 #: redbot/cogs/mod/kickban.py:315 redbot/cogs/mod/kickban.py:708
-msgid "I cannot let you do that. Self-harm is bad {emoji}"
-msgstr "No puedo dejarte hacer eso. El auto-daño es malo {emoji}"
+msgid "You cannot kick yourself."
+msgstr "No puedes patearte a ti mismo."
 
 #: redbot/cogs/mod/kickban.py:337
 msgid "You have been kicked from {guild}."

@@ -61,8 +61,8 @@ msgid "Invalid days. Must be between 0 and 7."
 msgstr "無效的天數，天數必須在0和7之間。"
 
 #: redbot/cogs/mod/kickban.py:130 redbot/cogs/mod/kickban.py:625
-msgid "I cannot let you do that. Self-harm is bad {}"
-msgstr "我不能讓你那樣做。自殘是不好的{}"
+msgid "You cannot ban yourself."
+msgstr "你不能禁止自己"
 
 #: redbot/cogs/mod/kickban.py:135 redbot/cogs/mod/kickban.py:322
 #: redbot/cogs/mod/kickban.py:630 redbot/cogs/mod/kickban.py:715
@@ -95,11 +95,15 @@ msgstr "ID 為 {user_id} 的用戶已被封鎖。"
 msgid "User with ID {user_id} was upgraded from a temporary to a permanent ban."
 msgstr "ID 為 {user_id} 的用戶已從臨時封禁升級為永久封禁。"
 
-#: redbot/cogs/mod/kickban.py:201 redbot/cogs/mod/kickban.py:371
-msgid "Done. That felt good."
+#: redbot/cogs/mod/kickban.py:281
+msgid "User with ID {user_id} has been banned."
 msgstr "完成。感覺啵棒。"
 
-#: redbot/cogs/mod/kickban.py:203 redbot/cogs/mod/kickban.py:350
+#: redbot/cogs/mod/kickban.py:371
+msgid "User with ID {user_id} has been kicked."
+msgstr ""
+
+#: redbot/cogs/mod/kickban.py:200 redbot/cogs/mod/kickban.py:343
 msgid "I'm not allowed to do that."
 msgstr "我不被允許那樣做。"
 
@@ -134,8 +138,8 @@ msgid "You must provide a reason for the kick."
 msgstr ""
 
 #: redbot/cogs/mod/kickban.py:315 redbot/cogs/mod/kickban.py:708
-msgid "I cannot let you do that. Self-harm is bad {emoji}"
-msgstr "我不能讓你那樣做。自殘是不好的 {emoji}"
+msgid "You cannot kick yourself."
+msgstr "你不能踢自己"
 
 #: redbot/cogs/mod/kickban.py:337
 msgid "You have been kicked from {guild}."

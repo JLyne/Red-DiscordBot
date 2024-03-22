@@ -25,8 +25,8 @@ msgid "Mention spam (Autoban)"
 msgstr ""
 
 #: redbot/cogs/mod/kickban.py:73
-msgid "I cannot let you do that. Self-harm is bad {}"
-msgstr "Ya can't keelhaul yerself. {}"
+msgid "You cannot ban yourself."
+msgstr "Ya can't keelhaul yerself."
 
 #: redbot/cogs/mod/kickban.py:75 redbot/cogs/mod/kickban.py:170
 #: redbot/cogs/mod/kickban.py:433 redbot/cogs/mod/kickban.py:514
@@ -60,11 +60,15 @@ msgid "Kick a user.\\n\\n        If a reason is specified, it will be the reason
 msgstr ""
 
 #: redbot/cogs/mod/kickban.py:163 redbot/cogs/mod/kickban.py:426
-msgid "I cannot let you do that. Self-harm is bad {emoji}"
+msgid "You cannot kick yourself."
 msgstr ""
 
-#: redbot/cogs/mod/kickban.py:203
-msgid "Done. That felt good."
+#: redbot/cogs/mod/kickban.py:198
+msgid "User with ID {user_id} has been banned."
+msgstr ""
+
+#: redbot/cogs/mod/kickban.py:362
+msgid "User with ID {user_id} has been kicked."
 msgstr ""
 
 #: redbot/cogs/mod/kickban.py:217

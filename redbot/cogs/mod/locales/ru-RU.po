@@ -61,8 +61,8 @@ msgid "Invalid days. Must be between 0 and 7."
 msgstr "Недопустимое значение дней. Должно быть между 0 и 7."
 
 #: redbot/cogs/mod/kickban.py:130 redbot/cogs/mod/kickban.py:625
-msgid "I cannot let you do that. Self-harm is bad {}"
-msgstr "Я не могу позволить вам сделать это. Вред самому себе - это плохо {}"
+msgid "You cannot ban yourself."
+msgstr "Вы не можете запретить себя."
 
 #: redbot/cogs/mod/kickban.py:135 redbot/cogs/mod/kickban.py:322
 #: redbot/cogs/mod/kickban.py:630 redbot/cogs/mod/kickban.py:715
@@ -95,11 +95,15 @@ msgstr "Пользователь с ID {user_id} уже забанен."
 msgid "User with ID {user_id} was upgraded from a temporary to a permanent ban."
 msgstr "Пользователь с ID {user_id} был переведен из временного в постоянный бан."
 
-#: redbot/cogs/mod/kickban.py:201 redbot/cogs/mod/kickban.py:371
-msgid "Done. That felt good."
+#: redbot/cogs/mod/kickban.py:281
+msgid "User with ID {user_id} has been banned."
 msgstr "Готово. Это было здорово."
 
-#: redbot/cogs/mod/kickban.py:203 redbot/cogs/mod/kickban.py:350
+#: redbot/cogs/mod/kickban.py:371
+msgid "User with ID {user_id} has been kicked."
+msgstr ""
+
+#: redbot/cogs/mod/kickban.py:200 redbot/cogs/mod/kickban.py:343
 msgid "I'm not allowed to do that."
 msgstr "Я не могу это сделать."
 
@@ -134,8 +138,8 @@ msgid "You must provide a reason for the kick."
 msgstr ""
 
 #: redbot/cogs/mod/kickban.py:315 redbot/cogs/mod/kickban.py:708
-msgid "I cannot let you do that. Self-harm is bad {emoji}"
-msgstr "Я не могу позволить тебе сделать это. Членовредительство - это плохо {emoji}"
+msgid "You cannot kick yourself."
+msgstr "Ты не можешь ударить себя."
 
 #: redbot/cogs/mod/kickban.py:337
 msgid "You have been kicked from {guild}."

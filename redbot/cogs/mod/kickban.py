@@ -127,7 +127,7 @@ class KickBanMixin(MixinMeta):
             if author == user:
                 return (
                     False,
-                    _("I cannot let you do that. Self-harm is bad {}").format("\N{PENSIVE FACE}"),
+                    _("You cannot ban yourself.")
                 )
             elif not await is_allowed_by_hierarchy(self.bot, self.config, guild, author, user):
                 return (
@@ -198,7 +198,7 @@ class KickBanMixin(MixinMeta):
                     user.id,
                     days,
                 )
-                success_message = _("Done. That felt good.")
+                success_message = _("User with ID {user_id} has been banned.").format(user_id=user.id)
             except discord.Forbidden:
                 return False, _("I'm not allowed to do that.")
             except discord.NotFound:
@@ -312,9 +312,7 @@ class KickBanMixin(MixinMeta):
 
         if author == member:
             await ctx.send(
-                _("I cannot let you do that. Self-harm is bad {emoji}").format(
-                    emoji="\N{PENSIVE FACE}"
-                )
+                _("You cannot kick yourself.")
             )
             return
         elif not await is_allowed_by_hierarchy(self.bot, self.config, guild, author, member):
@@ -368,7 +366,7 @@ class KickBanMixin(MixinMeta):
                 until=None,
                 channel=None,
             )
-            await ctx.send(_("Done. That felt good."))
+            await ctx.send(_("User with ID {user_id} has been kicked.").format(user_id=member.id))
 
     @commands.command()
     @commands.guild_only()
@@ -622,7 +620,7 @@ class KickBanMixin(MixinMeta):
 
         if author == member:
             await ctx.send(
-                _("I cannot let you do that. Self-harm is bad {}").format("\N{PENSIVE FACE}")
+                _("You cannot ban yourself.")
             )
             return
         elif not await is_allowed_by_hierarchy(self.bot, self.config, guild, author, member):
@@ -705,9 +703,7 @@ class KickBanMixin(MixinMeta):
 
         if author == member:
             await ctx.send(
-                _("I cannot let you do that. Self-harm is bad {emoji}").format(
-                    emoji="\N{PENSIVE FACE}"
-                )
+                _("You cannot kick yourself.")
             )
             return
         elif not await is_allowed_by_hierarchy(self.bot, self.config, guild, author, member):

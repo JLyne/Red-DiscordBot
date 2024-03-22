@@ -61,8 +61,8 @@ msgid "Invalid days. Must be between 0 and 7."
 msgstr "올바르지 않은 요일이에요. 0에서 7사이여야 해요."
 
 #: redbot/cogs/mod/kickban.py:130 redbot/cogs/mod/kickban.py:625
-msgid "I cannot let you do that. Self-harm is bad {}"
-msgstr "그렇게 하게 둘 수는 없어요. 자해는 나빠요. {}"
+msgid "You cannot ban yourself."
+msgstr "자신을 금지할 수는 없습니다."
 
 #: redbot/cogs/mod/kickban.py:135 redbot/cogs/mod/kickban.py:322
 #: redbot/cogs/mod/kickban.py:630 redbot/cogs/mod/kickban.py:715
@@ -95,9 +95,13 @@ msgstr ""
 msgid "User with ID {user_id} was upgraded from a temporary to a permanent ban."
 msgstr ""
 
-#: redbot/cogs/mod/kickban.py:201 redbot/cogs/mod/kickban.py:371
-msgid "Done. That felt good."
+#: redbot/cogs/mod/kickban.py:281
+msgid "User with ID {user_id} has been banned."
 msgstr "다 했어요. 앙 기분 좋아."
+
+#: redbot/cogs/mod/kickban.py:371
+msgid "User with ID {user_id} has been kicked."
+msgstr ""
 
 #: redbot/cogs/mod/kickban.py:203 redbot/cogs/mod/kickban.py:350
 msgid "I'm not allowed to do that."
@@ -134,7 +138,7 @@ msgid "You must provide a reason for the kick."
 msgstr ""
 
 #: redbot/cogs/mod/kickban.py:315 redbot/cogs/mod/kickban.py:708
-msgid "I cannot let you do that. Self-harm is bad {emoji}"
+msgid "You cannot kick yourself."
 msgstr ""
 
 #: redbot/cogs/mod/kickban.py:337

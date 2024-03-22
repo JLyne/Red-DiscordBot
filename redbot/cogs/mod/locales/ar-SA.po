@@ -61,8 +61,8 @@ msgid "Invalid days. Must be between 0 and 7."
 msgstr "الأيام غير صالحة. يجب أن يكون بين 0 و 7."
 
 #: redbot/cogs/mod/kickban.py:130 redbot/cogs/mod/kickban.py:625
-msgid "I cannot let you do that. Self-harm is bad {}"
-msgstr "لا يمكنني أن أدعك تفعل ذلك. ضرر الذات سيئ {}"
+msgid "You cannot ban yourself."
+msgstr "لا يمكنك حظر نفسك."
 
 #: redbot/cogs/mod/kickban.py:135 redbot/cogs/mod/kickban.py:322
 #: redbot/cogs/mod/kickban.py:630 redbot/cogs/mod/kickban.py:715
@@ -95,9 +95,13 @@ msgstr ""
 msgid "User with ID {user_id} was upgraded from a temporary to a permanent ban."
 msgstr ""
 
-#: redbot/cogs/mod/kickban.py:201 redbot/cogs/mod/kickban.py:371
-msgid "Done. That felt good."
-msgstr "تم ذلك. لقد شعر ذلك بالخير."
+#: redbot/cogs/mod/kickban.py:201
+msgid "User with ID {user_id} has been banned."
+msgstr ""
+
+#: redbot/cogs/mod/kickban.py:371
+msgid "User with ID {user_id} has been kicked."
+msgstr ""
 
 #: redbot/cogs/mod/kickban.py:203 redbot/cogs/mod/kickban.py:350
 msgid "I'm not allowed to do that."
@@ -134,8 +138,8 @@ msgid "You must provide a reason for the kick."
 msgstr ""
 
 #: redbot/cogs/mod/kickban.py:315 redbot/cogs/mod/kickban.py:708
-msgid "I cannot let you do that. Self-harm is bad {emoji}"
-msgstr "لا يمكنني أن أدعك تفعل ذلك. الضرر الذاتي سيئ {emoji}"
+msgid "You cannot kick yourself."
+msgstr "لا يمكنك ركلة نفسك."
 
 #: redbot/cogs/mod/kickban.py:337
 msgid "You have been kicked from {guild}."
