@@ -61,8 +61,8 @@ msgid "Invalid days. Must be between 0 and 7."
 msgstr "Geçersiz zaman. 1 ila 7 arasında olmalıdır."
 
 #: redbot/cogs/mod/kickban.py:130 redbot/cogs/mod/kickban.py:638
-msgid "I cannot let you do that. Self-harm is bad {}"
-msgstr "Bunu yapmana izin veremem. Kendine zarar vermek kötü bir şey. {}"
+msgid "You cannot ban yourself."
+msgstr "Kendinizi yasaklayamazsınız."
 
 #: redbot/cogs/mod/kickban.py:135 redbot/cogs/mod/kickban.py:335
 #: redbot/cogs/mod/kickban.py:643 redbot/cogs/mod/kickban.py:750
@@ -97,9 +97,14 @@ msgstr "{user_id} IDli kullanıcı zaten banlandı."
 msgid "User with ID {user_id} was upgraded from a temporary to a permanent ban."
 msgstr "{user_id} IDli kullanıcının banı geçiciden kalıcıya yükseltildi."
 
-#: redbot/cogs/mod/kickban.py:214 redbot/cogs/mod/kickban.py:384
-msgid "Done. That felt good."
+
+#: redbot/cogs/mod/kickban.py:214
+msgid "User with ID {user_id} has been banned."
 msgstr "Tamamdır. Bu iyi hissettirdi."
+
+#: redbot/cogs/mod/kickban.py:384
+msgid "User with ID {user_id} has been kicked."
+msgstr ""
 
 #: redbot/cogs/mod/kickban.py:216 redbot/cogs/mod/kickban.py:363
 msgid "I'm not allowed to do that."
@@ -136,8 +141,8 @@ msgid "You must provide a reason for the kick."
 msgstr ""
 
 #: redbot/cogs/mod/kickban.py:328 redbot/cogs/mod/kickban.py:743
-msgid "I cannot let you do that. Self-harm is bad {emoji}"
-msgstr "Bunu yapmana izin veremem. Kendine zarar vermek kötü bir şey. {}"
+msgid "You cannot kick yourself."
+msgstr "Kendini tekmeleyemezsin."
 
 #: redbot/cogs/mod/kickban.py:350
 msgid "You have been kicked from {guild}."

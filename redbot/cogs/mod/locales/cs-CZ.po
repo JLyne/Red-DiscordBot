@@ -61,7 +61,7 @@ msgid "Invalid days. Must be between 0 and 7."
 msgstr "Neplatné dny. Musí být mezi 0 a 7."
 
 #: redbot/cogs/mod/kickban.py:130 redbot/cogs/mod/kickban.py:638
-msgid "I cannot let you do that. Self-harm is bad {}"
+msgid "You cannot ban yourself."
 msgstr ""
 
 #: redbot/cogs/mod/kickban.py:135 redbot/cogs/mod/kickban.py:335
@@ -97,8 +97,12 @@ msgstr ""
 msgid "User with ID {user_id} was upgraded from a temporary to a permanent ban."
 msgstr ""
 
-#: redbot/cogs/mod/kickban.py:214 redbot/cogs/mod/kickban.py:384
-msgid "Done. That felt good."
+#: redbot/cogs/mod/kickban.py:214
+msgid "User with ID {user_id} has been banned."
+msgstr ""
+
+#: redbot/cogs/mod/kickban.py:384
+msgid "User with ID {user_id} has been kicked."
 msgstr ""
 
 #: redbot/cogs/mod/kickban.py:216 redbot/cogs/mod/kickban.py:363
@@ -136,7 +140,7 @@ msgid "You must provide a reason for the kick."
 msgstr ""
 
 #: redbot/cogs/mod/kickban.py:328 redbot/cogs/mod/kickban.py:743
-msgid "I cannot let you do that. Self-harm is bad {emoji}"
+msgid "You cannot kick yourself."
 msgstr ""
 
 #: redbot/cogs/mod/kickban.py:350
