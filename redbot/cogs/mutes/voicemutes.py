@@ -130,7 +130,7 @@ class VoiceMutes(MixinMeta):
 
                 if result.success:
                     if result.reason:
-                        issue_list.append((user, result.reason))
+                        issue_list.append((user, result.get_reason_text()))
                     else:
                         success_list.append(user)
                     await modlog.create_case(
@@ -150,7 +150,7 @@ class VoiceMutes(MixinMeta):
                     async with self.config.member(user).perms_cache() as cache:
                         cache[channel.id] = result.old_overs
                 else:
-                    issue_list.append((user, result.reason))
+                    issue_list.append((user, result.get_reason_text()))
 
         if success_list:
             msg = _("{users} has been muted in this channel{time}.")
@@ -206,7 +206,7 @@ class VoiceMutes(MixinMeta):
 
                 if result.success:
                     if result.reason:
-                        issue_list.append((user, result.reason))
+                        issue_list.append((user, result.get_reason_text()))
                     else:
                         success_list.append(user)
                     await modlog.create_case(
@@ -224,7 +224,7 @@ class VoiceMutes(MixinMeta):
                         user, author, guild, _("Voice unmute"), reason
                     )
                 else:
-                    issue_list.append((user, result.reason))
+                    issue_list.append((user, result.get_reason_text()))
         if success_list:
             if channel.id in self._channel_mutes and self._channel_mutes[channel.id]:
                 await self.config.channel(channel).muted_users.set(self._channel_mutes[channel.id])
