@@ -1,16 +1,15 @@
 from typing import Optional, Tuple
-from datetime import timezone, timedelta, datetime
+from datetime import timedelta
 from .abc import MixinMeta
 
 import discord
-from redbot.core import commands, i18n, modlog
+from redbot.core import commands, i18n
 from redbot.core.utils.chat_formatting import (
     humanize_timedelta,
     humanize_list,
     pagify,
     format_perms_list,
 )
-from redbot.core.utils.mod import get_audit_reason
 
 from .converters import MuteTime
 
@@ -119,13 +118,11 @@ class VoiceMutes(MixinMeta):
                         time = _(" for {length} until {duration}").format(
                             length=length, duration=discord.utils.format_dt(until)
                         )
-                guild = ctx.guild
                 author = ctx.author
                 channel = user_voice_state.channel
-                audit_reason = get_audit_reason(author, reason, shorten=True)
 
-                result = await self.channel_mute_user(
-                    guild, channel, author, user, until, audit_reason, voice_mute=True
+                result = await self.voice_mute_user(
+                    channel, user, actor=author, duration=duration, reason=reason
                 )
 
                 if result.success:
@@ -133,22 +130,6 @@ class VoiceMutes(MixinMeta):
                         issue_list.append((user, result.get_reason_text()))
                     else:
                         success_list.append(user)
-                    await modlog.create_case(
-                        self.bot,
-                        guild,
-                        ctx.message.created_at,
-                        "vmute",
-                        user,
-                        author,
-                        reason,
-                        until=until,
-                        channel=channel,
-                    )
-                    await self._send_dm_notification(
-                        user, author, guild, _("Voice mute"), reason, duration
-                    )
-                    async with self.config.member(user).perms_cache() as cache:
-                        cache[channel.id] = result.old_overs
                 else:
                     issue_list.append((user, result.get_reason_text()))
 
@@ -195,13 +176,11 @@ class VoiceMutes(MixinMeta):
                 if not can_move:
                     issue_list.append((user, perm_reason))
                     continue
-                guild = ctx.guild
                 author = ctx.author
                 channel = user_voice_state.channel
-                audit_reason = get_audit_reason(author, reason, shorten=True)
 
-                result = await self.channel_unmute_user(
-                    guild, channel, author, user, audit_reason, voice_mute=True
+                result = await self.voice_unmute_user(
+                    channel, user, actor=author, reason=reason
                 )
 
                 if result.success:
@@ -209,27 +188,9 @@ class VoiceMutes(MixinMeta):
                         issue_list.append((user, result.get_reason_text()))
                     else:
                         success_list.append(user)
-                    await modlog.create_case(
-                        self.bot,
-                        guild,
-                        ctx.message.created_at,
-                        "vunmute",
-                        user,
-                        author,
-                        reason,
-                        until=None,
-                        channel=channel,
-                    )
-                    await self._send_dm_notification(
-                        user, author, guild, _("Voice unmute"), reason
-                    )
                 else:
                     issue_list.append((user, result.get_reason_text()))
         if success_list:
-            if channel.id in self._channel_mutes and self._channel_mutes[channel.id]:
-                await self.config.channel(channel).muted_users.set(self._channel_mutes[channel.id])
-            else:
-                await self.config.channel(channel).muted_users.clear()
             await ctx.send(
                 _("{users} unmuted in this channel.").format(
                     users=humanize_list([f"{u}" for u in success_list])
