@@ -31,6 +31,8 @@ class MuteIssue(enum.Enum):
     MuteIsTooLong = "mute_is_too_long"
     TimeoutsRequireTime = "timeouts_require_time"
     IsNotVoiceMute = "is_not_voice_mute"
+    CogDisabled = "cog_disabled"
+
 
 MUTE_UNMUTE_ISSUES = {
     MuteIssue.AlreadyMuted: "That user is already muted in {location}.",
@@ -61,6 +63,7 @@ MUTE_UNMUTE_ISSUES = {
         "That user is channel muted in their current voice channel, not just voice muted."
         " If you want to fully unmute this user in the channel,"
         " use {command} in their voice channel's text channel instead.",
+    MuteIssue.CogDisabled: _("The mutes cog is disabled in this guild."),
 }
 
 
