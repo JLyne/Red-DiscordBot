@@ -2027,7 +2027,7 @@ class Mutes(VoiceMutes, commands.Cog, metaclass=CompositeMetaClass):
 
         overwrites.update(**old_values)
         if channel.id in self._channel_mutes and user.id in self._channel_mutes[channel.id]:
-            current_mute = self._channel_mutes[channel.id].pop(user.id)
+            current_mute = self._channel_mutes[channel.id][user.id]
         else:
             ret.reason = MuteIssue.AlreadyUnmuted
             return ret
@@ -2051,6 +2051,8 @@ class Mutes(VoiceMutes, commands.Cog, metaclass=CompositeMetaClass):
                 if str(user.id) in muted_users:
                     del muted_users[str(user.id)]
 
+            del self._channel_mutes[channel.id][user.id]
+
             if channel.id in self._channel_mutes and self._channel_mutes[channel.id]:
                 await self.config.channel(channel).muted_users.set(self._channel_mutes[channel.id])
             else:
@@ -2058,10 +2060,12 @@ class Mutes(VoiceMutes, commands.Cog, metaclass=CompositeMetaClass):
 
         except discord.NotFound as e:
             if e.code == 10003:
+                del self._channel_mutes[channel.id][user.id]
                 ret.reason = MuteIssue.UnknownChannel
                 return ret
 
             elif e.code == 10009:
+                del self._channel_mutes[channel.id][user.id]
                 ret.reason = MuteIssue.LeftGuild
                 return ret
 
