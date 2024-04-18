@@ -535,7 +535,8 @@ class PlayerControllerCommands(MixinMeta, metaclass=CompositeMetaClass):
             percent = await self.config.guild(ctx.guild).vote_percent()
             if vote >= percent:
                 self.skip_votes[ctx.guild.id] = set()
-                await self.send_embed_msg(ctx, title=_("Vote threshold met."))
+                if num_members > 1:
+                    await self.send_embed_msg(ctx, title=_("Vote threshold met."))
                 return await self._skip_action(ctx)
             else:
                 reply += _(
