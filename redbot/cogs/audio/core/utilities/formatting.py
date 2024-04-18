@@ -182,7 +182,9 @@ class FormattingUtilities(MixinMeta, metaclass=CompositeMetaClass):
                     "red_audio_track_enqueue", player.guild, search_choice, ctx.author
                 )
             else:
-                return await self.send_embed_msg(ctx, title=_("Track exceeds maximum length."))
+                return await self.send_embed_msg(ctx, title=_("Track exceeds maximum length."),
+                                                 description=_("Maximum track length is **{maxlength}**")
+                                                 .format(maxlength=self.get_time_string(guild_data["maxlength"])))
         else:
             search_choice.extras.update(
                 {
