@@ -165,6 +165,11 @@ class AudioEvents(MixinMeta, metaclass=CompositeMetaClass):
     ):
         if not (track and guild):
             return
+
+        player = lavalink.get_player(guild.id)
+        if player and player.current and player.current.extras.get("autoplay", False):
+            await player.skip()
+
         persist_cache = self._persist_queue_cache.setdefault(
             guild.id, await self.config.guild(guild).persist_queue()
         )
