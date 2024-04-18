@@ -2,6 +2,7 @@ import asyncio
 import contextlib
 import random
 import re
+import traceback
 
 from collections import OrderedDict
 from pathlib import Path
@@ -452,26 +453,53 @@ class DpyEvents(MixinMeta, metaclass=CompositeMetaClass):
         if await self.bot.cog_disabled_in_guild(self, member.guild):
             return
         await self.cog_ready_event.wait()
+
+        channel = self.rgetattr(member, "voice.channel", None)
+        bot_voice_state = self.rgetattr(member, "guild.me.voice.self_deaf", None)
+        player = None
+
+        try:
+            player = lavalink.get_player(channel.guild.id)
+        except (NodeNotFound, PlayerNotFound, AttributeError):
+            pass
+
         if after.channel != before.channel:
             try:
                 self.skip_votes[before.channel.guild.id].discard(member.id)
             except (ValueError, KeyError, AttributeError):
                 pass
 
-        channel = self.rgetattr(member, "voice.channel", None)
-        bot_voice_state = self.rgetattr(member, "guild.me.voice.self_deaf", None)
+            if member == member.guild.me and after.channel:
+                notify_channel = channel.guild.get_channel_or_thread(player.fetch("notify_channel"))
+
+                if channel and type(channel) == discord.StageChannel:
+                    permissions = channel.permissions_for(member)
+
+                    error = lambda: self.send_embed_msg(
+                        notify_channel,
+                        title=_("Unable To Request To Speak"),
+                        description=_("Please ask a mod to make me a speaker."),
+                    )
+
+                    try:
+                        if permissions.mute_members:
+                            return await member.edit(suppress=False)
+                        elif permissions.request_to_speak:
+                            return await member.request_to_speak()
+                        else:
+                            return await error()
+                    except (discord.Forbidden, discord.ClientException, discord.HTTPException):
+                        traceback.print_exc()
+                        return await error()
+
+
         if (
-            channel
+            player
             and bot_voice_state is False
             and await self.config.guild(member.guild).auto_deafen()
         ):
-            try:
-                player = lavalink.get_player(channel.guild.id)
-            except (NodeNotFound, PlayerNotFound, AttributeError):
-                pass
-            else:
-                if player.channel.id == channel.id:
-                    await self.self_deafen(player)
+            if player.channel.id == channel.id:
+                await self.self_deafen(player)
 
     @commands.Cog.listener()
     async def on_shard_disconnect(self, shard_id):
