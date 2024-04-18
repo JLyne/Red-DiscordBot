@@ -751,6 +751,21 @@ class AudioSetCommands(MixinMeta, metaclass=CompositeMetaClass):
             ),
         )
 
+    @command_audioset.command(name="allowplaylists")
+    @commands.guild_only()
+    @commands.mod_or_permissions(administrator=True)
+    async def command_audioset_allowplaylists(self, ctx: commands.Context):
+        """Whether to allow queueing playlists."""
+        allow_queueing_playlists = await self.config.guild(ctx.guild).allow_queueing_playlists()
+        await self.config.guild(ctx.guild).allow_queueing_playlists.set(not allow_queueing_playlists)
+        await self.send_embed_msg(
+            ctx,
+            title=_("Setting Changed"),
+            description=_("Allowing queueing of playlists: {true_or_false}.").format(
+                true_or_false=_("Enabled") if not allow_queueing_playlists else _("Disabled")
+            ),
+        )
+
     @command_audioset.command(name="jukebox")
     @commands.guild_only()
     @commands.mod_or_permissions(administrator=True)

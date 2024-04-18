@@ -149,6 +149,7 @@ class Audio(
             room_lock=None,
             url_keyword_blacklist=[],
             url_keyword_whitelist=[],
+            allow_queueing_playlists=True,
             country_code="US",
         )
         _playlist: Mapping = dict(id=None, author=None, name=None, playlist_url=None, tracks=[])

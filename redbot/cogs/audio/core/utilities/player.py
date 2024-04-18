@@ -377,6 +377,10 @@ class PlayerUtilities(MixinMeta, metaclass=CompositeMetaClass):
                 raise QueryUnauthorized(
                     _("{query} is not an allowed query.").format(query=query.to_string_user())
                 )
+
+            if query.is_playlist and not await self.config.guild(ctx.guild).allow_queueing_playlists():
+                return await self.send_embed_msg(ctx, title=_("Queueing of playlists has been disabled"))
+
             if query.single_track:
                 first_track_only = True
                 index = query.track_index
@@ -434,6 +438,9 @@ class PlayerUtilities(MixinMeta, metaclass=CompositeMetaClass):
         before_queue_length = len(player.queue)
 
         if not first_track_only and len(tracks) > 1:
+            if not await self.config.guild(ctx.guild).allow_queueing_playlists():
+                return await self.send_embed_msg(ctx, title=_("Queueing of playlists has been disabled"))
+
             # a list of Tracks where all should be enqueued
             # this is a Spotify playlist already made into a list of Tracks or a
             # url where Lavalink handles providing all Track objects to use, like a
