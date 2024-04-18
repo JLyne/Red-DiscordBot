@@ -150,6 +150,8 @@ class Audio(
             url_keyword_blacklist=[],
             url_keyword_whitelist=[],
             allow_queueing_playlists=True,
+            allow_starting_stages=False,
+            stage_topic="",
             country_code="US",
         )
         _playlist: Mapping = dict(id=None, author=None, name=None, playlist_url=None, tracks=[])

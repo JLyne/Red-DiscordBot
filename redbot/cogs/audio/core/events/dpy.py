@@ -11,6 +11,7 @@ from typing import Final, Pattern
 
 import discord
 import lavalink
+from discord import PrivacyLevel
 from red_commons.logging import getLogger
 
 from aiohttp import ClientConnectorError
@@ -480,6 +481,23 @@ class DpyEvents(MixinMeta, metaclass=CompositeMetaClass):
                         title=_("Unable To Request To Speak"),
                         description=_("Please ask a mod to make me a speaker."),
                     )
+
+                    stage_error = lambda: self.send_embed_msg(
+                        notify_channel,
+                        title=_("Unable To Start Stage"),
+                        description=_("Please ask a mod to start the stage."),
+                    )
+
+                    if permissions.manage_channels and not after.channel.instance \
+                            and await self.config.guild(after.channel.guild).allow_starting_stages():
+                        try:
+                            await after.channel.create_instance(
+                                topic=await self.config.guild(after.channel.guild).stage_topic(),
+                                privacy_level=PrivacyLevel.guild_only,
+                                reason="Summoned to #{}".format(after.channel.name))
+                        except (discord.Forbidden, discord.ClientException, discord.HTTPException):
+                            traceback.print_exc()
+                            await stage_error()
 
                     try:
                         if permissions.mute_members:

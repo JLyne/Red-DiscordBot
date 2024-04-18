@@ -766,6 +766,33 @@ class AudioSetCommands(MixinMeta, metaclass=CompositeMetaClass):
             ),
         )
 
+    @command_audioset.command(name="startstages")
+    @commands.guild_only()
+    @commands.mod_or_permissions(administrator=True)
+    async def command_audioset_startstages(self, ctx: commands.Context):
+        """Whether to start stage channels when summoned with sufficient permissions."""
+        allow_starting_stages = await self.config.guild(ctx.guild).allow_starting_stages()
+        await self.config.guild(ctx.guild).allow_starting_stages.set(not allow_starting_stages)
+        await self.send_embed_msg(
+            ctx,
+            title=_("Setting Changed"),
+            description=_("Allowing starting of stage channels: {true_or_false}.").format(
+                true_or_false=_("Enabled") if not allow_starting_stages else _("Disabled")
+            ),
+        )
+
+    @command_audioset.command(name="stagetopic")
+    @commands.guild_only()
+    @commands.mod_or_permissions(administrator=True)
+    async def command_audioset_stagetopic(self, ctx: commands.Context, *, topic: str):
+        """Set the topic for started stage channels."""
+        await self.config.guild(ctx.guild).stage_topic.set(topic)
+        await self.send_embed_msg(
+            ctx,
+            title=_("Setting Changed"),
+            description=_("Stage topic set to: {}.").format(topic),
+        )
+
     @command_audioset.command(name="jukebox")
     @commands.guild_only()
     @commands.mod_or_permissions(administrator=True)
