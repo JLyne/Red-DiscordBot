@@ -730,7 +730,6 @@ class PlayerControllerCommands(MixinMeta, metaclass=CompositeMetaClass):
                     channel,
                     self_deaf=await self.config.guild_from_id(ctx.guild.id).auto_deafen(),
                 )
-            await ctx.tick()
         except AttributeError:
             ctx.command.reset_cooldown(ctx)
             return await self.send_embed_msg(
@@ -745,6 +744,8 @@ class PlayerControllerCommands(MixinMeta, metaclass=CompositeMetaClass):
                 title=_("Unable To Join Voice Channel"),
                 description=_("Connection to the Lavalink node has not yet been established."),
             )
+
+        await ctx.tick()
 
     @commands.command(name="volume")
     @commands.guild_only()
