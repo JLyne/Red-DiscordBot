@@ -284,6 +284,50 @@ class QueueCommands(MixinMeta, metaclass=CompositeMetaClass):
                 ).format(removed_tracks=removed_tracks, member=ctx.author),
             )
 
+    @command_queue.command(name="cleanuser")
+    async def command_queue_cleanuser(self, ctx: commands.Context, member: discord.Member):
+        """Removes songs from the queue requested by a specific user."""
+        try:
+            player = lavalink.get_player(ctx.guild.id)
+        except KeyError:
+            return await self.send_embed_msg(ctx, title=_("There's nothing in the queue."))
+        dj_enabled = self._dj_status_cache.setdefault(
+            ctx.guild.id, await self.config.guild(ctx.guild).dj_enabled()
+        )
+        if not self._player_check(ctx) or not player.queue:
+            return await self.send_embed_msg(ctx, title=_("There's nothing in the queue."))
+        if (
+            dj_enabled
+            and not await self._can_instaskip(ctx, ctx.author)
+            and not await self.is_requester_alone(ctx)
+        ):
+            return await self.send_embed_msg(
+                ctx,
+                title=_("Unable To Clean Queue"),
+                description=_("You need the DJ role to clean the queue."),
+            )
+        clean_tracks = []
+        removed_tracks = 0
+        async for track in AsyncIter(player.queue):
+            if track.requester != member:
+                clean_tracks.append(track)
+            else:
+                removed_tracks += 1
+                await self.api_interface.persistent_queue_api.played(
+                    ctx.guild.id, track.extras.get("enqueue_time")
+                )
+        player.queue = clean_tracks
+        if removed_tracks == 0:
+            await self.send_embed_msg(ctx, title=_("Removed 0 tracks."))
+        else:
+            await self.send_embed_msg(
+                ctx,
+                title=_("Removed Tracks From The Queue"),
+                description=_(
+                    "Removed {removed_tracks} tracks queued by {member}"
+                ).format(removed_tracks=removed_tracks, member=member.name),
+            )
+
     @command_queue.command(name="search")
     async def command_queue_search(self, ctx: commands.Context, *, search_words: str):
         """Search the queue."""
