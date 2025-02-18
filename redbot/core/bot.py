@@ -122,6 +122,7 @@ class Red(
         self._cli_flags = cli_flags
         self._config = Config.get_core_conf(force_registration=False)
         self.rpc_enabled = cli_flags.rpc
+        self.rpc_docker = cli_flags.rpc_docker
         self.rpc_port = cli_flags.rpc_port
         self._last_exception = None
         self._config.register_global(
@@ -1346,7 +1347,7 @@ class Red(
             log.info("No packages were loaded.")
 
         if self.rpc_enabled:
-            await self.rpc.initialize(self.rpc_port)
+            await self.rpc.initialize(self.rpc_port, self.rpc_docker)
 
     def _setup_owners(self) -> None:
         if self.application.team:

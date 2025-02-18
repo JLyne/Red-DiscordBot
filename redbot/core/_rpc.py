@@ -79,7 +79,7 @@ class RPC:
 
         self._runner = web.AppRunner(self.app)
 
-    async def initialize(self, port: int):
+    async def initialize(self, port: int, docker: bool=False):
         """
         Finalizes the initialization of the RPC server and allows it to begin
         accepting queries.
@@ -95,7 +95,7 @@ class RPC:
                 await self._runner.setup(),
                 web.TCPSite(
                     self._runner,
-                    host="127.0.0.1",
+                    host= "0.0.0.0" if docker else "127.0.0.1",
                     port=port,
                 ),
             )

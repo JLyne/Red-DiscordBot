@@ -267,6 +267,11 @@ def parse_cli_flags(args):
         help="Allows mentioning the bot as an alternative to using the bot prefix",
     )
     parser.add_argument(
+        "--rpc-docker",
+        action="store_true",
+        help="Configured the built-in RPC server to listen on all interfaces, allowing access when running in a docker container.",
+    )
+    parser.add_argument(
         "--rpc",
         action="store_true",
         help="Enables the built-in RPC server. Please read the docs prior to enabling this!",
