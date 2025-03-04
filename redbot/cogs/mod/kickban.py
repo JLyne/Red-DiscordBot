@@ -11,9 +11,8 @@ from redbot.core.utils import AsyncIter
 from redbot.core.utils.chat_formatting import (
     pagify,
     humanize_number,
-    bold,
     humanize_list,
-    format_perms_list,
+    format_perms_list, header,
 )
 from redbot.core.utils.mod import get_audit_reason
 from redbot.core.utils.views import ConfirmView
@@ -144,31 +143,25 @@ class KickBanMixin(MixinMeta):
 
             toggle = await self.config.guild(guild).dm_on_kickban()
             if toggle:
-                extra_embed = await self.config.guild(guild).ban_show_extra()
+                show_extra = await self.config.guild(guild).ban_show_extra()
 
                 with contextlib.suppress(discord.HTTPException):
-                    em = discord.Embed(
-                        title=bold(_("You have been banned from {guild}.").format(guild=guild)),
-                        color=await self.bot.get_embed_color(user),
-                    )
-                    em.add_field(
-                        name=_("**Reason**"),
-                        value=reason if reason is not None else _("No reason was given."),
-                        inline=False,
-                    )
-                    if extra_embed:
-                        extra_embed_title = await self.config.guild(guild).ban_extra_embed_title()
-                        extra_embed_contents = await self.config.guild(
+                    message = [
+                        header(_("You have been banned from {guild}.").format(guild=guild), "small"),
+                        "{}: {}".format(_("**Reason**"), reason if reason is not None else _("No reason was given.")),
+                    ]
+
+                    if show_extra:
+                        extra_title = await self.config.guild(guild).ban_extra_embed_title()
+                        extra_contents = await self.config.guild(
                             guild
                         ).ban_extra_embed_contents()
 
-                        em.add_field(
-                            name=bold(extra_embed_title, escape_formatting=False),
-                            value=extra_embed_contents,
-                            inline=False,
-                        )
-                    await user.send(embed=em)
+                        message.append("")
+                        message.append(extra_title)
+                        message.append(extra_contents)
 
+                    await user.send("\n".join(message))
             ban_type = "ban"
         else:
             tempbans = await self.config.guild(guild).current_tempbans()
@@ -345,16 +338,12 @@ class KickBanMixin(MixinMeta):
         toggle = await self.config.guild(guild).dm_on_kickban()
         if toggle:
             with contextlib.suppress(discord.HTTPException):
-                em = discord.Embed(
-                    title=bold(_("You have been kicked from {guild}.").format(guild=guild)),
-                    color=await self.bot.get_embed_color(member),
-                )
-                em.add_field(
-                    name=_("**Reason**"),
-                    value=reason if reason is not None else _("No reason was given."),
-                    inline=False,
-                )
-                await member.send(embed=em)
+                message = [
+                    header(_("You have been kicked from {guild}.").format(guild=guild), "small"),
+                     "{}: {}".format(_("**Reason**"), reason if reason is not None else _("No reason was given."),),
+                ]
+
+                await member.send("\n".join(message))
         try:
             await guild.kick(member, reason=audit_reason)
             log.info("%s (%s) kicked %s (%s)", author, author.id, member, member.id)
@@ -707,38 +696,30 @@ class KickBanMixin(MixinMeta):
         with contextlib.suppress(discord.HTTPException):
             # We don't want blocked DMs preventing us from banning
 
-            extra_embed = await self.config.guild(guild).ban_show_extra()
+            show_extra = await self.config.guild(guild).ban_show_extra()
 
-            em = discord.Embed(
-                title=bold(
-                    _("You have been temporarily banned from {guild} until {date}.").format(
-                        guild=guild, date=discord.utils.format_dt(unban_time)
-                    )
-                ),
-                color=await self.bot.get_embed_color(member),
-            )
-            em.add_field(
-                name=_("**Reason**"),
-                value=reason if reason is not None else _("No reason was given."),
-                inline=False,
-            )
+            msg = [header(_("You have been temporarily banned from {server_name} until {date}."), "small").format(
+                server_name=guild.name, date=discord.utils.format_dt(unban_time)
+            )]
+            if reason:
+                msg.append("{}: {}\n".format(_("**Reason**"),
+                                           reason if reason is not None else _("No reason was given.")))
             if invite:
-                em.add_field(
-                    name=bold(_("Here is an invite for when your ban expires")),
-                    value=invite,
-                    inline=False,
-                )
-            if extra_embed:
-                extra_embed_title = await self.config.guild(guild).ban_extra_embed_title()
-                extra_embed_contents = await self.config.guild(guild).ban_extra_embed_contents()
+                msg.append(_("Here is an invite for when your ban expires: {invite_link}").format(
+                    invite_link=invite
+                ))
 
-                em.add_field(
-                    name=bold(extra_embed_title, escape_formatting=False),
-                    value=extra_embed_contents,
-                    inline=False,
-                )
+            if show_extra:
+                extra_title = await self.config.guild(guild).ban_extra_embed_title()
+                extra_contents = await self.config.guild(
+                    guild
+                ).ban_extra_embed_contents()
+
+                msg.append("")
+                msg.append(extra_title)
+                msg.append(extra_contents)
             if in_server:
-                await member.send(embed=em)
+                await member.send("\n".join(msg))
 
         audit_reason = get_audit_reason(author, reason, shorten=True)
 
